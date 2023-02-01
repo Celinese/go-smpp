@@ -4,16 +4,17 @@ import (
 	"log"
 	"os"
 	"strings"
-
+	"time"
 
 	"github.com/fiorix/go-smpp/smpp"
-	"github.com/fiorix/go-smpp/smpp/pdu/pdufield
-	"github.com/fiorix/go-smpp/smpp/pdu/dutext"
-	"github.com/fiorix/go-smpp/v2/modl"
-	"github.com/gin-contrib/sesions"
+	"github.com/fiorix/go-smpp/smpp/pdu/pdufield"
+	"github.com/fiorix/go-smpp/smpp/pdu/pdutext"
+	"github.com/fiorix/go-smpp/v2/model"
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-	_ "github.com/jinzhu/gorm/ialects/mysql"
-	
+	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"github.com/joho/godotenv"
+)
 
 // ============================================================== //
 // ============================================================== //
@@ -57,15 +58,15 @@ func Submitfrom(c *gin.Context) {
 	type Request struct {
 		Sender string `form:"sender" binding:"required,min=1,max=50"`
 		//	PhoneNumber string `form:"phone_number" binding:"required,len=11"`
-		PhoneNumber string `form:"phone_number" binding:"required,min=10,max=11"`
+		PhoneTo string `form:"Phone_to" binding:"required,min=10,max=11"`
 
-		Message string `form:"message" binding:"required,min=1,max=160"`
+		MessageTo string `form:"Message_to" binding:"required,min=1,max=160"`
 	}
 	var request Request
-	if len(request.PhoneNumber) == 10 {
-		request.PhoneNumber = "+66" + request.PhoneNumber
+	if len(request.PhoneTo) == 10 {
+		request.PhoneTo = "66" + request.PhoneTo
 	}
-	request.PhoneNumber = strings.Replace(request.PhoneNumber, "0", "+66", 1)
+	request.PhoneTo = strings.Replace(request.PhoneTo, "0", "66", 1)
 	if err := c.ShouldBind(&request); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
@@ -74,8 +75,8 @@ func Submitfrom(c *gin.Context) {
 	// Prepare the SMS message
 	msg := &smpp.ShortMessage{
 		Src:      request.Sender,
-		Dst:      request.PhoneNumber,
-		Text:     pdutext.UCS2(request.Message),
+		Dst:      request.PhoneTo,
+		Text:     pdutext.UCS2(request.MessageTo),
 		Register: pdufield.NoDeliveryReceipt,
 	}
 
@@ -92,30 +93,29 @@ func Submitfrom(c *gin.Context) {
 	/* c.JSON(302, gin.H{"message": "SMS message sent successfully ;( "}) */
 
 	log.Println("Sender ID:", request.Sender)
-	log.Println("Sender ID:", request.PhoneNumber)
-	log.Println("Sender ID:", request.Message)
+	log.Println("Sender ID:", request.PhoneTo)
+	log.Println("Sender ID:", request.MessageTo)
 	log.Println("Sender ID:", userId)
 	log.Println("Sender ID:", userName)
 
 	// TODO: Function Insert the data into the database
 	// Get session UserId & Name
 
-	err = model.Submitfrominsert(request.Sender, request.PhoneNumber, request.Message, userName, userId)
+	err = model.Submitfrominsert(request.Sender, request.PhoneTo, request.MessageTo, userName, userId)
 	if err != nil {
 		log.Fatal(err)
-		og.Fatal(err)
-}
-
-	// ![Func CeateFile Custom.log & InsertLog To File] //
-	// open file and create if non-existent
-	file, err := osOpenFile("LogFile/Send.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-	if err != nil {
-		og.Fatal(err)
 	}
-defer file.Close()
 
-	logger := log.New(file, "Send Log", log.LstdFlags)
-logger.Println("[Message Sennd] Sender:", request.Sender, "Receiver:", request.PhoneNumber, "Message:", request.Message, "Username:", userName, "UserId:", userId)
+	// ![Func CeateFile Custom.log & Insert Log To File] //
+	currentDate := time.Now().Format("2006-01-02")
+	// Create the log file with the date as the file name
+	logFile, err := os.OpenFile("LogFile/Send-"+currentDate+".log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0666)
+	if err != nil {
+		log.Fatalf("Error opening log file: %v", err)
+	}
+	defer logFile.Close()
+	logger := log.New(logFile, "", log.LstdFlags)
+	logger.Println("[Message Sennd] Sender:", request.Sender, "Receiver:", request.PhoneTo, "Message:", request.MessageTo, "Username:", userName, "UserId:", userId)
 
-	/ ![End Func Intert Log to File] //
+	// ![End Func Intert Log to File] //
 }

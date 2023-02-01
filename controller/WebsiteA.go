@@ -152,7 +152,7 @@ func ShowLogsPage(c *gin.Context) {
 		return
 	}
 	// ! [START]
-	/* userIdValue, ok := userId.(uint)
+	userIdValue, ok := userId.(uint)
 	if !ok {
 		// Handle the error
 		log.Println("Invalid type for userId")
@@ -161,7 +161,7 @@ func ShowLogsPage(c *gin.Context) {
 	if err != nil {
 		// Handle the error
 		log.Println(err)
-	} */
+	}
 	// ! [END]
 	t, err := template.ParseFiles("templates/header.html", "templates/Logs.html", "templates/footer.html")
 	if err != nil {
@@ -186,7 +186,7 @@ func ShowLogsPage(c *gin.Context) {
 		"userName":  userName,
 		"userRole":  userRole,
 		"userPhone": userPhone,
-		/* "sendsms":   sendsms, */
+		"sendsms":   sendsms,
 	})
 
 	if err != nil {

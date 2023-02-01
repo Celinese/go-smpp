@@ -17,7 +17,7 @@ import (
 //           TODO: Function Insert SMS SEND TO DATABASE ...       //
 // ============================================================== //
 // ============================================================== //
-func SendInsert(Sender, Phone_Number, Message string) error {
+func SendInsert(Sender, PhoneTo, MessageTo string) error {
 
 	now := time.Now()
 	//db, err := sql.Open("mysql", "root:@tcp(localhost:3306)/connxsmpp")
@@ -37,7 +37,7 @@ func SendInsert(Sender, Phone_Number, Message string) error {
 
 	//TODO: Prepare the insert statement [Function Insert]
 
-	_, err = db.Exec("INSERT INTO sendsms (Sender, Phone_Number, Message, date) VALUES (?, ?, ?, ?)", Sender, Phone_Number, Message, now)
+	_, err = db.Exec("INSERT INTO sendsms (Sender, Phone_to, Message_to, date_insert, hand_on) VALUES (?, ?, ?, ?, ?)", Sender, PhoneTo, MessageTo, now, "API")
 	if err != nil {
 		return err
 	}

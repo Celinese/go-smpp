@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/fiorix/go-smpp/smpp"
@@ -66,12 +67,21 @@ func SendSms(c *gin.Context) {
 	// TODO: Check Vaildate From Number & Message [ Number = Max 160 ] [ Phone Number = 11 ]
 	// Validate phone number and message
 	type Request struct {
-		Sender    string `form:"sender" binding:"required,min=1,max=50"`
-		PhoneTo   string `form:"phone_To" binding:"required,len=11"`
-		MessageTo string `form:"message_To" binding:"required,min=1,max=160"`
+		Sender string `form:"sender" binding:"required,min=1,max=50"`
+		/* PhoneTo   string `form:"phone_To" binding:"required,len=11"` */
+		PhoneTo   string `form:"Phone_to" binding:"required,min=10,max=11"`
+		MessageTo string `form:"Message_to" binding:"required,min=1,max=160"`
 	}
 
 	var request Request
+	if len(request.PhoneTo) == 10 {
+		request.PhoneTo = "66" + request.PhoneTo
+	}
+	request.PhoneTo = strings.Replace(request.PhoneTo, "0", "66", 1)
+	if err := c.ShouldBind(&request); err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
 
 	if err := c.ShouldBind(&request); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
@@ -99,7 +109,7 @@ func SendSms(c *gin.Context) {
 	}
 
 	// Return success message to the client
-	c.JSON(302, gin.H{"message": "SMS message sent successfully ;( "})
+	c.JSON(200, gin.H{"message": "SMS message sent successfully ;( "})
 	log.Println("Sender ID:", request.Sender)
 	log.Println("Sender ID:", request.PhoneTo)
 	log.Println("Sender ID:", request.MessageTo)

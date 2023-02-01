@@ -22,8 +22,8 @@
                             <div class="row">  
                                 <div class="col-sm-6 col-md-12 col-xs-12">  
                                     <div class="form-group">  
-                                        <label for="firstname">SENDER</label>  
-                                        <input type="text" id="sender" name="sender" value="0977063999" placeholder="0977063999" class="form-control" aria-describedby="inputGroupPrepend" readonly />  
+                                        <label for="firstname">ผู้ส่ง</label>  
+                                        <input type="text" id="sender" name="sender" value="0977063999" placeholder="ConnX" class="form-control" aria-describedby="inputGroupPrepend" readonly />  
                                         <div class="invalid-feedback">  
                                             Please enter first name.  
                                         </div>  
@@ -34,19 +34,20 @@
                             <div class="row">  
                                 <div class="col-sm-4 col-md-12 col-xs-12">  
                                     <div class="form-group">  
-                                        <label for="phonenumber">Mobile Number</label>  
-                                        <input type="tel" id="phone_number" name="phone_number"  class="form-control"  placeholder="Mobile Number" aria-describedby="inputGroupPrepend" required >  {{/* required */}}
-                                        <div class="invalid-feedback">  
-                                            Please enter 10 digit mobile number.  
-                                        </div>  
+                                        <label for="tel">ผู้รับ</label>  
+                                        <input type="tel" id="CheckMobileNumber" name="Phone_to"  class="form-control"  placeholder="Mobile Number" aria-describedby="inputGroupPrepend" required >  {{/* required */}}
+                                    <div div class="invalid-feedback">  
+                                            โปรดกรอกหมายเลขโทรศัพท์ 10 หลัก ด้วยรูปแบบดังนี้ 08XXXXXXXX ไม่ต้องใส่เครื่องหมายขีด (-) วงเล็บหรือเว้นวรรค  
+                                        </div> 
+                                      
                                     </div>  
                                 </div>  
                             </div>  
                             <div class="row">  
                                 <div class="col-sm-12 col-md-12 col-xs-12">  
                                     <div class="form-group">  
-                                        <label for="address">Address</label>  
-                                        <textarea class="form-control" rows="3" id="message" name="message" aria-describedby="inputGroupPrepend" required></textarea>  
+                                        <label for="address">ข้อความ</label>  
+                                        <textarea class="form-control" rows="3" id="ClearInput" name="Message_to" placeholder="จำกัด 255 ตัวอักษร" aria-describedby="inputGroupPrepend" required></textarea>  
                                         <div class="invalid-feedback">please enter address</div>  
                                     </div>  
                                 </div>  
@@ -69,8 +70,8 @@
                             <div class="row">  
                                 <div class="col-sm-12 col-md-12 col-xs-12">  
                                     <div class="float-right">  
-                                        <button class="btn btn-danger rounded-0" type="submit">Cancel</button>  
-                                        <button class="btn btn-primary rounded-0" type="submit">Register</button>  
+                                        <button class="btn btn-danger " onclick="document.getElementById('ClearInput').value = ''">Clear</button>  
+                                        <button class="btn btn-primary rounded-0" type="submit">SEND</button>  
                                     </div>                            
                                 </div>  
                             </div>  

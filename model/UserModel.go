@@ -19,7 +19,7 @@ type Sendsms struct {
 	Message_to  string `json:"Message_to"`
 	User_name   string `json:"User_name"`
 	User_id     string `json:"User_id"`
-	hand_on     string `json:"hand_on"`
+	Hand_on     string `json:"hand_on"`
 	Date_insert time.Time
 }
 

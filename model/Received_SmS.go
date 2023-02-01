@@ -60,7 +60,7 @@ func InsertDB(address, phone, ucs2Message string) error {
 
 	//TODO: Prepare the insert statement [Function Insert]
 
-	_, err = db.Exec("INSERT INTO received (address, phone, message, date) VALUES (?, ?, ?, ?)", address, phone, ucs2Message, now)
+	_, err = db.Exec("INSERT INTO received (sender, phone_customer, message_customer, date_received, hand_on) VALUES (?, ?, ?, ?, ?)", address, phone, ucs2Message, now, "API")
 	if err != nil {
 		return err
 	}
