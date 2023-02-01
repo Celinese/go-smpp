@@ -1,0 +1,46 @@
+
+<div class="container ontop">
+     <h4>ID : {{.userId}}</h4>
+     <h4>NAME :  {{ .userName }}</h4>
+     <h4>Role :  {{ .userRole }}</h4>
+     <h4>PHONE :  {{ .userPhone }}</h4>
+</div>
+
+<div class="container">  
+<table id="example" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>No</th> 
+                <th>Sender</th>
+                <th>Phone</th>
+                <th>Message</th>
+                <th>UserName</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+         <tbody>
+                {{ range . }}
+                <tr>
+                    <td>{{ .id }}</td>
+                    <td>{{ .sender }}</td>
+                    <td>{{ .PhoneNumber }}</td>
+                    <td>{{ .Message }}</td>
+                    <td>{{ .Name }}</td>
+                    <td>{{ .Date }}</td>
+                </tr>
+                {{ end }}
+            </tbody>
+        <tfoot>
+            <tr>
+                <th>No</th> 
+                <th>Sender</th>
+                <th>Phone</th>
+                <th>Message</th>
+                <th>UserName</th>
+                <th>Date</th>
+            </tr>
+        </tfoot>
+    </table>
+
+</div>
+

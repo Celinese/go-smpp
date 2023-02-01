@@ -1,0 +1,79 @@
+{{/* {{template "header.html" .}} */}}
+{{/* {{define "header"}} */}}
+<div class="container ontop">
+     <h4>ID : {{.userId}}</h4>
+     <h4>NAME :  {{ .userName }}</h4>
+     <h4>Role :  {{ .userRole }}</h4>
+     <h4>PHONE :  {{ .userPhone }}</h4>
+</div>
+
+{{/* {{template "footer.html" .}} */}}
+
+     
+ {{ if .message }}
+    <div>
+        <p>{{ .message }}</p>
+    </div>
+    {{ end }}
+
+
+<div class="containerform">  {{/* <form method="post" action="/submit"> */}}
+  <form id="needs-validation"  method="post" action="/submit" novalidate>  
+                            <div class="row">  
+                                <div class="col-sm-6 col-md-12 col-xs-12">  
+                                    <div class="form-group">  
+                                        <label for="firstname">SENDER</label>  
+                                        <input type="text" id="sender" name="sender" value="0977063999" placeholder="0977063999" class="form-control" aria-describedby="inputGroupPrepend" readonly />  
+                                        <div class="invalid-feedback">  
+                                            Please enter first name.  
+                                        </div>  
+                                    </div>  
+                                </div>  
+                                
+                            </div>  
+                            <div class="row">  
+                                <div class="col-sm-4 col-md-12 col-xs-12">  
+                                    <div class="form-group">  
+                                        <label for="phonenumber">Mobile Number</label>  
+                                        <input type="tel" id="phone_number" name="phone_number"  class="form-control"  placeholder="Mobile Number" aria-describedby="inputGroupPrepend" required >  {{/* required */}}
+                                        <div class="invalid-feedback">  
+                                            Please enter 10 digit mobile number.  
+                                        </div>  
+                                    </div>  
+                                </div>  
+                            </div>  
+                            <div class="row">  
+                                <div class="col-sm-12 col-md-12 col-xs-12">  
+                                    <div class="form-group">  
+                                        <label for="address">Address</label>  
+                                        <textarea class="form-control" rows="3" id="message" name="message" aria-describedby="inputGroupPrepend" required></textarea>  
+                                        <div class="invalid-feedback">please enter address</div>  
+                                    </div>  
+                                </div>  
+                            </div>  
+                            <div class="row">  
+                                <div class="col-sm-12 col-md-12 col-xs-12">  
+                                    <div class="form-group">  
+                                        <div class="form-check">  
+                                            <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>   {{/* required */}}
+                                            <label class="form-check-label" for="invalidCheck">  
+                                                ยอมรับเงื่อนไขและข้อตกลงในการใช้บริการ ConnX SMPP
+                                            </label>  
+                                            <div class="invalid-feedback">  
+                                                You must agree before submitting.  
+                                            </div>  
+                                        </div>  
+                                    </div>  
+                                </div>  
+                            </div>  
+                            <div class="row">  
+                                <div class="col-sm-12 col-md-12 col-xs-12">  
+                                    <div class="float-right">  
+                                        <button class="btn btn-danger rounded-0" type="submit">Cancel</button>  
+                                        <button class="btn btn-primary rounded-0" type="submit">Register</button>  
+                                    </div>                            
+                                </div>  
+                            </div>  
+                        </form>  
+{{/*   <button type="submit" class="btn btn-primary btn-xs">Submit</button> */}}
+</div>
